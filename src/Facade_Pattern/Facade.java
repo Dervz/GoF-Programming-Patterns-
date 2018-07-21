@@ -6,6 +6,9 @@ package Facade_Pattern;
  * 1) Turn on the PowerSupply of the computer
  * 2) Load DVDRom
  * 3) Copy data from DVD to HDD
+ *
+ * However, all of that is not going to be performed by us.
+ * Rather, it is being ordered by Computer class to be performed by other classes such as PowerSupply, DVDRom and HDD.
  */
 public class Facade {
 
