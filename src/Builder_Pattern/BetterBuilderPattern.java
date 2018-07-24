@@ -6,14 +6,24 @@ public class BetterBuilderPattern {
 
         Director director = new Director();
 
-        director.setComputerBuilderB(new GamingComputerB());
+        director.setComputerBuilderB(new GamingComputerB());      //all we have to do here is to just supply different builder
         director.buildComputerB();
 
-        ComputerB computerB = director.computerBuilderB.getComputerB();
-        System.out.println(computerB);
+        ComputerB gamingComputerB = director.computerBuilderB.getComputerB();
+        System.out.println(gamingComputerB);
+
+        director.setComputerBuilderB(new ProgrammingComputerB()); //like this && it gives awesome flexibility. Only client code gets changed
+        director.buildComputerB();
+
+        ComputerB programmingComputerB = director.computerBuilderB.getComputerB();
+        System.out.println("\n*************************************************\n\n" + programmingComputerB);
     }
 }
 
+/**
+ * Bunch of enums that define the state of
+ * ComputerB objects by supplying the value of
+ */
 enum MotherBoardMakerB {
     ASUS, MSI, GIGABYTE
 }
@@ -30,10 +40,14 @@ enum CoolingTypeB {
     WATER_COOLING, FAN_COOLING
 }
 
+/**
+ * This class is the PRODUCT
+ * We will be building this product with the BUILDER classes.
+ */
 class ComputerB {
 
     /**
-     * Bunch of private variables that determine the state of Computer
+     * Bunch of private variables that determine the state of ComputerB
      */
     private MotherBoardMakerB motherboardMaker;
     private VideoCardMakerB videoCardMaker;
@@ -41,6 +55,10 @@ class ComputerB {
     private int RAM;
     private CoolingTypeB coolingType;
 
+    /**
+     * Bunch of setters for the private variables
+     * The builders will use these setters in order to instantiate the object of ComputerB
+     */
     public void setMotherboardMaker(MotherBoardMakerB motherboardMaker) {
         this.motherboardMaker = motherboardMaker;
     }
@@ -72,6 +90,10 @@ class ComputerB {
     }
 }
 
+/**
+ * Abstract builder of ComputerB.
+ * Note that it is abstract for one simple reason: possible extends by the new classes in the future
+ */
 abstract class ComputerBuilderB {
 
     ComputerB computerB;
@@ -95,6 +117,10 @@ abstract class ComputerBuilderB {
     }
 }
 
+/**
+ * Concrete BUILDER for the gaming computer.
+ * Notice that it properly sets the values for all of variables of the computer - i.e it sets its state.
+ */
 class GamingComputerB extends ComputerBuilderB {
 
     @Override
@@ -124,6 +150,10 @@ class GamingComputerB extends ComputerBuilderB {
 }
 
 
+/**
+ * Concrete BUILDER for the programming computer.
+ * Notice that it properly sets the values for all of variables of the computer - i.e it sets its state.
+ */
 class ProgrammingComputerB extends ComputerBuilderB {
 
     @Override
@@ -152,7 +182,13 @@ class ProgrammingComputerB extends ComputerBuilderB {
     }
 }
 
-
+/**
+ * Director class plays important role in the builder pattern
+ * 1) Declares computerBuilder
+ * 2) Sets computer builder via constructor
+ * 3) Builds computer with the corresponding builder
+ * 4) Returns build computer
+ */
 class Director {
     ComputerBuilderB computerBuilderB;
 
