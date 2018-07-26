@@ -1,6 +1,6 @@
 package Builder_Pattern;
 
-public class SimplerBuilderPattern {
+public class SimplerBuilder {
 
     public static void main(String[] args) {
         Computer computer = new ComputerBuilder()

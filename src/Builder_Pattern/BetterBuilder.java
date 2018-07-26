@@ -1,6 +1,6 @@
 package Builder_Pattern;
 
-public class BetterBuilderPattern {
+public class BetterBuilder {
 
     public static void main(String[] args) {
 
